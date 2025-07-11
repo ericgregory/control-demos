@@ -45,7 +45,8 @@ spec:
     targetRevision: 0.2.0
     helm:
       valuesObject: 
-        http.enabled: true
+        http:
+          enabled: true
   destination:
     name: "in-cluster"
     namespace: cosmonic-system
