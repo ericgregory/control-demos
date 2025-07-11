@@ -42,7 +42,7 @@ Use `kubectl` to get the `admin` password for the dashboard, which is stored in 
 kubectl get secret argocd-initial-admin-secret -n argocd -o jsonpath="{.data.password}" | base64 -d
 ```
 
-Log in to the dashboard with the `admin` username and the returned password.
+Open [http://localhost:8080](http://localhost:8080) in your browser, and log in to the dashboard with the `admin` username and the returned password.
 
 Use the Argo Application CRD manifests in `control-proj.yaml` to define your deployments of Cosmonic Control, a Cosmonic Control HostGroup, and the Welcome Tour component.
 
@@ -143,6 +143,9 @@ kubectl apply -f control-proj.yaml
 ```
 
 The Applications will appear on the Argo CD dashboard. It may take a moment for the Applications to finish syncing.
+A successful deployment will look like this:
+
+![welcome tour application view](<argo-app-welcome-tour.png>)
 
 ## Clean up
 
@@ -151,6 +154,7 @@ When you're finished:
 ```shell
 kubectl delete -f control-proj.yaml
 ```
+
 ```shell
 helm uninstall argo-cd -n argocd
 ```
