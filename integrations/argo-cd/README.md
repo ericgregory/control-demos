@@ -41,7 +41,7 @@ Use `kubectl` to get the `admin` password for the dashboard, which is stored in 
 kubectl get secret argocd-initial-admin-secret -n argocd -o jsonpath="{.data.password}" | base64 -d
 ```
 
-Navigate to [localhost:3000](localhost:3000) to access the Argo CD dashboard in your browser. Log in to the dashboard with the `admin` username and the returned password.
+Navigate to [localhost:3000](http://localhost:3000) to access the Argo CD dashboard in your browser. Log in to the dashboard with the `admin` username and the returned password.
 
 ![Argo CD dashboard login page](./img/argo-login.webp)
 
@@ -158,13 +158,13 @@ You can click on an Application to view it in more detail. Try clicking on the w
 
 ## Test the deployments
 
-Port-forward to access the Cosmonic Control Console UI at [localhost:8080](localhost:8080):
+Port-forward to access the Cosmonic Control Console UI at [localhost:8080](http://localhost:8080):
 
 ```shell
 kubectl -n cosmonic-system port-forward svc/console 8080:8080
 ```
 
-Port-forward to access the Welcome Tour component at [localhost:9091](localhost:9091):
+Port-forward to access the Welcome Tour component at [localhost:9091](http://localhost:9091):
 
 ```shell
 kubectl -n cosmonic-system port-forward svc/hostgroup-default 9091:9091
