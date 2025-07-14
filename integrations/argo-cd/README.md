@@ -6,6 +6,7 @@ This repository includes an Argo CD Application CRD manifest that can be used to
 
 * A Kubernetes cluster with CoreDNS. (This guide was written using [`kind`](https://kind.sigs.k8s.io/) version 0.27.0, which includes CoreDNS by default.)
 * [`kubectl`](https://kubernetes.io/releases/download/)
+* [Helm](https://helm.sh/docs) v3.8.0+
 
 ## Deploy Argo CD and Cosmonic Control
 
@@ -40,7 +41,6 @@ Use `kubectl` to get the `admin` password for the dashboard, which is stored in 
 kubectl get secret argocd-initial-admin-secret -n argocd -o jsonpath="{.data.password}" | base64 -d
 ```
 
-Open [http://localhost:8080](http://localhost:8080) in your browser, and log in to the dashboard with the `admin` username and the returned password.
 Navigate to [localhost:3000](localhost:3000) to access the Argo CD dashboard in your browser. Log in to the dashboard with the `admin` username and the returned password.
 
 ![Argo CD dashboard login page](./img/argo-login.webp)
