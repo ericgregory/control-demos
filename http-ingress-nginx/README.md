@@ -22,7 +22,7 @@ If your ingress controller is configured with a domain name, you will need to cu
 Install the with the following command:
 
 ```shell
-kubectl apply -k .
+kubectl apply -k ./kustomize
 ```
 
 ### Accessing the Demo
