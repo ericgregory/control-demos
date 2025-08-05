@@ -41,7 +41,8 @@ jobs:
        working-directory: ./hello-world
        run: |
           WASM_FILENAME="$(basename ./target/wasm32-wasip2/debug/*.wasm .wasm)"
-          echo "GITHUB_WASM_FILENAME=${WASM_FILENAME}" >>${GITHUB_ENV}
+          ARTIFACT_NAME="$("$WASM_FILENAME" | tr '_' '-')"
+          echo "GITHUB_WASM_FILENAME=${ARTIFACT_NAME}" >>${GITHUB_ENV}
 
      - name: Login to GHCR
        uses: docker/login-action@v3
@@ -70,7 +71,7 @@ jobs:
           sed -i "s|image:.*|image: $NEW_IMAGE|" "$DEPLOYMENT_FILE"
 
      - name: Commit and push manifest update
-       working-directory: /
+       working-directory: ./
        run: |
           git config --local user.email "actions@github.com"
           git config --local user.name "GitHub Actions"
