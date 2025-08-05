@@ -37,11 +37,11 @@ jobs:
        run: |
           wash build
 
-     - name: Get Wasm binary filename
+     - name: Get project name
        working-directory: ./hello-world
        run: |
           WASM_FILENAME="$(basename ./target/wasm32-wasip2/debug/*.wasm .wasm)"
-          ARTIFACT_NAME="$("$WASM_FILENAME" | tr '_' '-')"
+          ARTIFACT_NAME=`echo "$WASM_NAME" | tr '_' '-'`
           echo "GITHUB_WASM_FILENAME=${ARTIFACT_NAME}" >>${GITHUB_ENV}
 
      - name: Login to GHCR
