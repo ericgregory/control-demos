@@ -1,6 +1,6 @@
 [package]
 name = "hello-world"
-edition = "2025"
+edition = "2021"
 version = "1.0.0"
 
 [workspace]
