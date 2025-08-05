@@ -55,7 +55,7 @@ jobs:
           echo "GHCR_REPO_NAMESPACE=${GITHUB_REPOSITORY_OWNER,,}" >>${GITHUB_ENV}
 
      - name: Push Wasm component to ghcr.io
-       working-directory: ./target/wasm32-wasip2/debug/
+       working-directory: ./hello-world/target/wasm32-wasip2/debug/
        run: |
           wash oci push ghcr.io/${{ env.GHCR_REPO_NAMESPACE }}/components/${{ env.GITHUB_WASM_FILENAME }}:${{ github.ref_name }} ./${{ env.GITHUB_WASM_FILENAME }}.wasm
 
