@@ -37,6 +37,7 @@ jobs:
      - name: Change directory to hello-world
        run: |
          cd hello-world
+         ls
 
      - name: Compile Wasm binary
        run: |
