@@ -12,17 +12,6 @@ jobs:
       packages: write
     
     steps:
-     - uses: actions/checkout@v4
-     
-     - name: Setup wash CLI
-       uses: cosmonic-labs/setup-wash-action@main
-       with:
-         wash-version: latest
-
-     - name: Install wasm32-wasip2 target for Rust
-       run: |
-          rustup target add wasm32-wasip2
-
      - name: Checkout repository
        uses: actions/checkout@v4
        with:
@@ -33,17 +22,23 @@ jobs:
        run: |
           git fetch origin
           git checkout main
+     
+     - name: Setup wash CLI
+       uses: cosmonic-labs/setup-wash-action@main
+       with:
+         wash-version: latest
 
-     - name: Change directory to hello-world
+     - name: Install wasm32-wasip2 target for Rust
        run: |
-         cd hello-world
-         ls
+          rustup target add wasm32-wasip2
 
      - name: Compile Wasm binary
+       working-directory: ./hello-world
        run: |
           wash build
 
      - name: Get Wasm binary filename
+       working-directory: ./hello-world
        run: |
           WASM_FILENAME="$(basename ./target/wasm32-wasip2/debug/*.wasm .wasm)"
           echo "GITHUB_WASM_FILENAME=${WASM_FILENAME}" >>${GITHUB_ENV}
@@ -65,6 +60,7 @@ jobs:
           wash oci push ghcr.io/${{ env.GHCR_REPO_NAMESPACE }}/components/${{ env.GITHUB_WASM_FILENAME }}:${{ github.ref_name }} ./${{ env.GITHUB_WASM_FILENAME }}.wasm
 
      - name: Update image tag in Kubernetes manifest
+       working-directory: ./hello-world
        run: |
           DEPLOYMENT_FILE="manifests/component.yaml"
           OLD_IMAGE=$(grep "image:" "$DEPLOYMENT_FILE" | awk '{print $2}')
@@ -74,9 +70,10 @@ jobs:
           sed -i "s|image:.*|image: $NEW_IMAGE|" "$DEPLOYMENT_FILE"
 
      - name: Commit and push manifest update
+       working-directory: /
        run: |
           git config --local user.email "actions@github.com"
           git config --local user.name "GitHub Actions"
-          git add manifests/component.yaml
+          git add hello-world/manifests/component.yaml
           git commit -m "Update image tag in manifest"
           git push
