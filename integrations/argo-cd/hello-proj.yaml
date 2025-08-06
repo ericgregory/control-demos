@@ -1,0 +1,22 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: hello-world
+  namespace: argocd
+spec:
+  project: default
+  source:
+    repoURL: https://github.com/ericgregory/control-demos.git
+    targetRevision: HEAD
+    path: hello-world/manifests
+  destination:
+    name: "in-cluster"
+    namespace: cosmonic-system
+  syncPolicy:
+    automated: {}
+    retry:
+      limit: -1
+      backoff:
+        duration: 30s
+        factor: 2
+        maxDuration: 5m

@@ -1,7 +1,7 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: cosmonic-control
+  name: hostgroup
   namespace: argocd
   annotations:
     # ArgoCD will apply this manifest first.
@@ -9,19 +9,18 @@ metadata:
 spec:
   project: default
   source:
-    chart: cosmonic-control
-    repoURL: ghcr.io/cosmonic
+    chart: cosmonic-control-hostgroup
+    repoURL: ghcr.io/cosmonic 
     targetRevision: 0.2.0
     helm:
       valuesObject: 
-        cosmonicLicenseKey: "<insert license here>"
+        http:
+          enabled: true
   destination:
     name: "in-cluster"
     namespace: cosmonic-system
   syncPolicy:
     automated: {}
-    syncOptions:
-      - CreateNamespace=true
     retry:
       limit: -1
       backoff:
