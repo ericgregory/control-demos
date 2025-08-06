@@ -10,6 +10,7 @@ jobs:
     permissions:
       contents: write
       packages: write
+      pull-requests: write
     
     steps:
      - name: Checkout repository
@@ -63,11 +64,10 @@ jobs:
           # Update the image tag
           sed -i "s|image:.*|image: $NEW_IMAGE|" "$DEPLOYMENT_FILE"
 
-     - name: Commit and push manifest update
-       working-directory: ./
-       run: |
-          git config --local user.email "actions@github.com"
-          git config --local user.name "GitHub Actions"
-          git add hello-world/manifests/component.yaml
-          git commit -m "Update image tag in manifest"
-          git push
+     - name: Create Pull Request
+       uses: peter-evans/create-pull-request@v7
+       with:
+         token: ${{ secrets.GITHUB_TOKEN }}
+         commit-message: |
+            Update image tag in manifest to ${{ github.ref_name }}
+         title: Update image tag in manifest to ${{ github.ref_name }}

@@ -174,22 +174,22 @@ In the meantime, let's take a look at the last steps of the GitHub Workflow file
           DEPLOYMENT_FILE="manifests/component.yaml"
           OLD_IMAGE=$(grep "image:" "$DEPLOYMENT_FILE" | awk '{print $2}')
           NEW_IMAGE="ghcr.io/${{ env.GHCR_REPO_NAMESPACE }}/components/hello-world:${{ github.ref_name }}"
+
           # Update the image tag
           sed -i "s|image:.*|image: $NEW_IMAGE|" "$DEPLOYMENT_FILE"
 
-     - name: Commit and push manifest update
-       working-directory: ./
-       run: |
-          git config --local user.email "actions@github.com"
-          git config --local user.name "GitHub Actions"
-          git add hello-world/manifests/component.yaml
-          git commit -m "Update image tag in manifest"
-          git push
+     - name: Create Pull Request
+       uses: peter-evans/create-pull-request@v7
+       with:
+         token: ${{ secrets.GITHUB_TOKEN }}
+         commit-message: |
+            Update image tag in manifest to ${{ github.ref_name }}
+         title: Update image tag in manifest to ${{ github.ref_name }}
 ```
 
-After building the component from your repo, the run updates the image specification in the hello-world manifest that our Argo CD hello-world Application is targeting, so that the manifest specifies a 1.1.0 image in *your* GHCR registry. This change to the manifest will trigger a sync in Argo CD.
+After building the component from your repo, the run submits a pull request updating the image specification in the hello-world manifest that our Argo CD hello-world Application is targeting, so that the manifest specifies a 1.1.0 image in *your* GHCR registry. This change to the manifest will trigger a sync in Argo CD.
 
-Once the run completes successfully, switch over to the Argo CD UI and take a look at the hello-world Application. You should see that it has synced. 
+Once the run completes successfully, merge the automated pull request, switch over to the Argo CD dashboard, and take a look at the hello-world Application. You should see that it has synced. 
 
 ![Successful sync](./img/sync-ok.webp)
 
