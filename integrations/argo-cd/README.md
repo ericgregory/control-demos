@@ -4,10 +4,10 @@ This repository includes an Argo CD Application CRD manifest that can be used to
 
 ## Requirements
 
-* A Kubernetes cluster with CoreDNS. (This guide was written using [`kind`](https://kind.sigs.k8s.io/) version 0.27.0, which includes CoreDNS by default.)
+* Kubernetes cluster with CoreDNS. (This guide was written using [`kind`](https://kind.sigs.k8s.io/) version 0.27.0, which includes CoreDNS by default.)
 * [`kubectl`](https://kubernetes.io/releases/download/)
 * [Helm](https://helm.sh/docs) v3.8.0+
-* A [GitHub account](https://github.com/signup)
+* [GitHub account](https://github.com/signup)
 
 ## Fork the repository
 
