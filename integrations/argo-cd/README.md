@@ -1,4 +1,4 @@
-# GitOps with Cosmonic Control and Argo CD
+# Demo: GitOps with Cosmonic Control and Argo CD
 
 This repository includes an Argo CD Application CRD manifest that can be used to deploy [Cosmonic Control](https://cosmonic.com/docs/install-cosmonic-control), a [HostGroup](https://cosmonic.com/docs/custom-resources/#hostgroup), and a [Hello World WebAssembly (Wasm) component](https://github.com/cosmonic-labs/control-demos/tree/main/hello-world) with Argo CD.
 
