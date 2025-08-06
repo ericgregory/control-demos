@@ -1,11 +1,7 @@
 # Rust build artifacts
 target/
 
-# Wash build artifacts
-build/
+.wash
 
-# Packaged Helm charts
-*.tgz 
-
-# Junk
+# Trash
 .DS_Store

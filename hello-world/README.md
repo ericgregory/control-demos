@@ -1,40 +1,85 @@
-# "Hello World" for Cosmonic Control
+# "Hello World" in Rust for Cosmonic Control
 
-This is a simple Rust-based WebAssembly application intended as a simple "Hello world" introduction for Cosmonic Control. 
+This is a simple Rust-based WebAssembly (Wasm) component intended to run on [Cosmonic Control](https://cosmonic.com/), an enterprise control plane for managing WebAssembly (Wasm) workloads in cloud native environments. The component responds with a "Hello World" message for each request. 
 
-While this was written for Cosmonic Control, you can run it with any WebAssembly runtime that supports components and WASI HTTP.
+While this component was written for Cosmonic Control, you can run it with any WebAssembly runtime that supports the Component Model and the [WebAssembly System Interface (WASI)](https://wasi.dev/) HTTP API. The component is available as an OCI artifact at `ghcr.io/cosmonic-labs/components/hello-world`.
 
-## Running with Cosmonic Control
+Cosmonic Control is built on [wasmCloud](https://wasmcloud.com/), an Incubating project at the [Cloud Native Computing Foundation (CNCF)](https://www.cncf.io/).
 
-You can deploy this application to a Kubernetes cluster with [Cosmonic Control](https://cosmonic.com/docs/) using the included Helm chart:
+## Install Cosmonic Control
 
-```shell
-helm install hello-world ./chart/hello-world
-```
-
-The chart is also available as an OCI artifact:
+Sign up for Cosmonic Control's [free trial](https://cosmonic.com/trial) to get a `cosmonicLicenseKey`.
 
 ```shell
-helm install hello-world oci://ghcr.io/cosmonic-labs/charts/hello-world
+helm install cosmonic-control oci://ghcr.io/cosmonic/cosmonic-control --version 0.2.0 --namespace cosmonic-system --create-namespace --set cosmonicLicenseKey="<insert license here>"
 ```
 
-## Prerequisites for development
+Install a HostGroup with HTTP enabled:
 
-- `cargo` 1.82+
-- [`wash`](https://wasmcloud.com/docs/installation) 0.36.1+
-
-## Building
-
-```bash
-wash build
+```shell
+helm install hostgroup oci://ghcr.io/cosmonic/cosmonic-control-hostgroup --version 0.2.0 --namespace cosmonic-system --set http.enabled=true
 ```
 
-## Developing with `wash`
+## Deploy with Cosmonic Control
+
+Deploy this template to a Kubernetes cluster with Cosmonic Control using the included CRD manifest:
+
+```shell
+kubectl apply -f ./manifests/component.yaml
+```
+
+## Contents
+
+In addition to the standard elements of a Rust project, the template directory includes the following files and directories:
+
+- `wit/`: Directory for WebAssembly Interface Type (WIT) packages that define interfaces
+- `manifests/`: Example CRD deployment manifests for Kubernetes clusters with Cosmonic Control
+
+There is also a GitHub Workflow `hello-world.yml` in the `.github/workflows` directory at the root of `control-demos` that is triggered on release and builds the component, pushes an OCI artifact to GHCR, and updates the manifest in the `manifests/` subdirectory to reflect the latest version. This workflow should work in your own fork and can be adapted for other Rust-based Wasm components with minimal changes. 
+
+## Build Dependencies
+
+Before starting, ensure that you have the following installed:
+
+- [`cargo`](https://www.rust-lang.org/tools/install) 1.82+ for the Rust toolchain
+- [Wasm Shell (`wash`)](https://github.com/cosmonic-labs/wash) for component development
+
+### Developing with `wash`
+
+Clone the [cosmonic-labs/control-demos repository](https://github.com/cosmonic-labs/control-demos): 
+
+```shell
+git clone https://github.com/cosmonic-labs/control-demos.git
+```
+
+Change directory to `hello-world`:
+
+```shell
+cd hello-world
+```
+
+Start a development loop:
 
 ```shell
 wash dev
 ```
 
+The component is accessible at localhost:8000. View the code and make changes in `src/lib.rs`.
+
+### Clean Up
+
+You can cancel the `wash dev` process with `Ctrl-C`.
+
+## Building with `wash`
+
+To build the component:
+
 ```shell
-curl http://127.0.0.1:8000
+wash build
 ```
+
+## Further Reading
+
+For more on building components, see the [Developer Guide](https://cosmonic.com/docs/developer-guide/developing-webassembly-components) in the Cosmonic Control documentation. 
+
+To learn how to extend this example with additional capabilities, see the [Adding Capabilities](https://wasmcloud.com/docs/tour/adding-capabilities?lang=rust) section of the wasmCloud documentation.
