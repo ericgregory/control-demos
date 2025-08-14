@@ -10,10 +10,10 @@ Cosmonic Control is built on [wasmCloud](https://wasmcloud.com/), an Incubating 
 
 ## Install Cosmonic Control
 
-Sign up for Cosmonic Control's [free trial](https://cosmonic.com/trial) to get a `cosmonicLicenseKey`. **Note:** a `canary` installation is required to run the blobstore demo:
+Sign up for Cosmonic Control's [free trial](https://cosmonic.com/trial) to get a `cosmonicLicenseKey`.
 
 ```shell
-helm install cosmonic-control oci://ghcr.io/cosmonic/cosmonic-control --version 0.2.1 --namespace cosmonic-system --create-namespace --set cosmonicLicenseKey="<insert license here>" --set nexus.image.tag=canary --set operator.image.tag=canary --set console.image.tag=canary --set console_ui.image.tag=canary
+helm install cosmonic-control oci://ghcr.io/cosmonic/cosmonic-control --version 0.2.0 --namespace cosmonic-system --create-namespace --set cosmonicLicenseKey="<insert license here>" --set nexus.image.tag=canary --set operator.image.tag=canary --set console.image.tag=canary --set console_ui.image.tag=canary
 ```
 
 Install a HostGroup with HTTP enabled. **Note:** a `canary` installation is required to run the blobstore demo:  
