@@ -25,7 +25,7 @@ jobs:
           git checkout main
      
      - name: Setup wash CLI
-       uses: cosmonic-labs/setup-wash-action@main
+       uses: wasmCloud/setup-wash-action@main
        with:
          wash-version: latest
 
