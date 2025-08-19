@@ -35,7 +35,7 @@ In addition to the standard elements of a Rust project, the template directory i
 - `wit/`: Directory for WebAssembly Interface Type (WIT) packages that define interfaces
 - `manifests/`: Example CRD deployment manifests for Kubernetes clusters with Cosmonic Control
 
-There is also a GitHub Workflow `hello-world.yml` in the `.github/workflows` directory at the root of `control-demos` that is triggered on release and builds the component, pushes an OCI artifact to GHCR, and updates the manifest in the `manifests/` subdirectory to reflect the latest version. This workflow should work in your own fork and can be adapted for other Rust-based Wasm components with minimal changes. 
+There is also a GitHub Workflow `hello-world.yml` in the `.github/workflows` directory at the root of `control-demos` that is triggered on release. This workflow uses the [`setup-wash` GitHub Action](https://github.com/wasmCloud/setup-wash-action) to build the component and push an OCI artifact to GHCR, then updates the manifest in the `manifests/` subdirectory to reflect the latest version. The workflow should work in your own fork and can be adapted for other Rust-based Wasm components with minimal changes. 
 
 ## Build Dependencies
 

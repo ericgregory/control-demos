@@ -158,7 +158,7 @@ Let's call our release `1.1.0`. Create a new image tag, title the release, and c
 
 Publishing the release will trigger a GitHub Workflow. (If you'd like to watch the run, you can click the "Actions" tab for the repo and select "publish" under Jobs.) This workflow will:
 
-* Compile a Wasm binary from the Rust code in the hello-world directory using the [setup-wash GitHub Action](https://github.com/cosmonic-labs/setup-wash-action)
+* Compile a Wasm binary from the Rust code in the hello-world directory using the [setup-wash GitHub Action](https://github.com/wasmCloud/setup-wash-action)
 * Push the Wasm component to ghcr.io as an OCI artifact under your namespace
 * Update the image tag in the component's Kubernetes manifest to reflect the version of your new release
 * Commit and push the manifest update in your repo
