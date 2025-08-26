@@ -3,8 +3,8 @@ name: hono-swagger-ui
 description: Hono Swagger UI for Cosmonic Control
 
 type: application
-version: 0.1.0
-appVersion: "0.1.0"
+version: 1.2.9
+appVersion: "1.2.9"
 
 kubeVersion: ">= 1.29.0-0"
 
