@@ -11,7 +11,7 @@ namespace:
 # This is for setting up a WebAssembly component. 
 # More information can be found here: https://cosmonic.com/docs/api-reference/runtime.wasmcloud.dev#component
 component:
-  image: ghcr.io/cosmonic-labs/components/hono-swagger-ui:0.1.0
+  image: ghcr.io/cosmonic-labs/control-demos/hono-swagger-ui:0.1.0
   hostname: "localhost:9091"
   hostgroup: "default"
 

@@ -4,7 +4,7 @@ metadata:
   name: blobstore-nats
   namespace: default
 spec:
-  image: ghcr.io/cosmonic-labs/components/http-blobstore:0.1.0
+  image: ghcr.io/cosmonic-labs/control-demos/http-blobstore:0.1.0
   concurrency: 100
   replicas: 1
   hostSelector:
