@@ -67,7 +67,7 @@ jobs:
           echo "🔍 Verifying published component images..."
           
           for component in ${{ env.COMPONENTS }}; do
-            IMAGE="${{ env.REGISTRY }}/${{ env.REPO_OWNER_LC }}/components/$component:${{ steps.release.outputs.version }}"
+            IMAGE="${{ env.REGISTRY }}/${{ env.REPO_OWNER_LC }}/control-demos/$component:${{ steps.release.outputs.version }}"
             echo "Checking: $IMAGE"
     
             if docker manifest inspect -v $IMAGE 2>/dev/null; then
@@ -126,7 +126,7 @@ jobs:
           for component in ${{ env.COMPONENTS }}; do
             DEPLOYMENT_FILE="$component/values.yaml"
             OLD_IMAGE=$(grep "image:" "$DEPLOYMENT_FILE" | awk '{print $2}')
-            NEW_IMAGE="ghcr.io/${{ env.REPO_OWNER_LC }}/components/$component:${{ steps.release.outputs.version }}"
+            NEW_IMAGE="ghcr.io/${{ env.REPO_OWNER_LC }}/control-demos/$component:${{ steps.release.outputs.version }}"
             # Update the image tag
             sed -i "s|image:.*|image: $NEW_IMAGE|" "$DEPLOYMENT_FILE"
             echo "✅ Updated $component image tag"
@@ -139,11 +139,11 @@ jobs:
           for component in ${{ env.COMPONENTS }}; do
             file="$component/values.yaml"
             if [ -f "$file" ]; then
-              if grep -q "ghcr.io/${{ env.REPO_OWNER_LC }}/components/$component:${{ steps.release.outputs.version }}" "$file"; then
+              if grep -q "ghcr.io/${{ env.REPO_OWNER_LC }}/control-demos/$component:${{ steps.release.outputs.version }}" "$file"; then
                 echo "✅ $component: Image tag updated correctly"
               else
                 echo "❌ $component: Image tag not updated properly"
-                echo "Expected: ghcr.io/${{ env.REPO_OWNER_LC }}/components/$component:${{ steps.release.outputs.version }}"
+                echo "Expected: ghcr.io/${{ env.REPO_OWNER_LC }}/control-demos/$component:${{ steps.release.outputs.version }}"
                 echo "Found in $file:"
                 grep "image:" "$file" || echo "No image field found"
                 exit 1
@@ -178,7 +178,7 @@ jobs:
             - 📦 **Chart Version**: Updated to `${{ steps.release.outputs.version }}`
 
             ### Published Artifacts
-            - 🎯 **Components**: `ghcr.io/${{ env.REPO_OWNER_LC }}/components/*:${{ steps.release.outputs.version }}`
+            - 🎯 **Components**: `ghcr.io/${{ env.REPO_OWNER_LC }}/control-demos/*:${{ steps.release.outputs.version }}`
             - ⚙️ **Chart**: `oci://ghcr.io/${{ env.REPO_OWNER_LC }}/charts/http-sample:${{ steps.release.outputs.version }}`
 
             ### Usage

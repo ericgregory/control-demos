@@ -173,7 +173,7 @@ In the meantime, let's take a look at the last steps of the GitHub Workflow file
        run: |
           DEPLOYMENT_FILE="manifests/component.yaml"
           OLD_IMAGE=$(grep "image:" "$DEPLOYMENT_FILE" | awk '{print $2}')
-          NEW_IMAGE="ghcr.io/${{ env.GHCR_REPO_NAMESPACE }}/components/hello-world:${{ github.ref_name }}"
+          NEW_IMAGE="ghcr.io/${{ env.GHCR_REPO_NAMESPACE }}/control-demos/hello-world:${{ github.ref_name }}"
 
           # Update the image tag
           sed -i "s|image:.*|image: $NEW_IMAGE|" "$DEPLOYMENT_FILE"

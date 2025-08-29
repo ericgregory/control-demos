@@ -111,7 +111,7 @@ jobs:
         id: push
         working-directory: ./http-server/build
         run: |
-          IMAGE="${{ env.REGISTRY }}/${{ env.REPO_OWNER_LC }}/components/http-server:${{ needs.validate-release.outputs.version }}"
+          IMAGE="${{ env.REGISTRY }}/${{ env.REPO_OWNER_LC }}/control-demos/http-server:${{ needs.validate-release.outputs.version }}"
           wash oci push "$IMAGE" ./*.wasm
           echo "image=$IMAGE" >> $GITHUB_OUTPUT
           echo "✅ Published: $IMAGE"
@@ -177,7 +177,7 @@ jobs:
         id: push
         working-directory: ./hono-swagger-ui/dist
         run: |
-          IMAGE="${{ env.REGISTRY }}/${{ env.REPO_OWNER_LC }}/components/hono-swagger-ui:${{ needs.validate-release.outputs.version }}"
+          IMAGE="${{ env.REGISTRY }}/${{ env.REPO_OWNER_LC }}/control-demos/hono-swagger-ui:${{ needs.validate-release.outputs.version }}"
           wash oci push "$IMAGE" ./*.wasm
           echo "image=$IMAGE" >> $GITHUB_OUTPUT
           echo "✅ Published: $IMAGE"
@@ -243,7 +243,7 @@ jobs:
         id: push
         working-directory: ./welcome-tour/dist
         run: |
-          IMAGE="${{ env.REGISTRY }}/${{ env.REPO_OWNER_LC }}/components/welcome-tour:${{ needs.validate-release.outputs.version }}"
+          IMAGE="${{ env.REGISTRY }}/${{ env.REPO_OWNER_LC }}/control-demos/welcome-tour:${{ needs.validate-release.outputs.version }}"
           wash oci push "$IMAGE" ./*.wasm
           echo "image=$IMAGE" >> $GITHUB_OUTPUT
           echo "✅ Published: $IMAGE"
