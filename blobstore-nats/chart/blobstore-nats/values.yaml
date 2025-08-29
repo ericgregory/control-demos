@@ -12,7 +12,7 @@ blobProvider:
 # This is for setting up a WebAssembly component. 
 # More information can be found here: https://cosmonic.com/docs/api-reference/runtime.wasmcloud.dev#component
 component:
-  image: ghcr.io/cosmonic-labs/components/http-blobstore
+  image: ghcr.io/cosmonic-labs/control-demos/http-blobstore
   tag: 0.1.0
   hostname: "localhost:9091"
 

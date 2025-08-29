@@ -12,5 +12,5 @@ images:
     newName: ghcr.io/wasmcloud/http-server
     newTag: 0.27.0
   - name: component-hello-world
-    newName: ghcr.io/cosmonic-labs/components/hello-world-hono
+    newName: ghcr.io/cosmonic-labs/control-demos/hello-world-hono
     newTag: 0.1.0
