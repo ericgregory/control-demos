@@ -1,0 +1,6 @@
+components:
+  - name: http
+    image: ghcr.io/cosmonic-labs/control-demos/hello-world:0.1.2
+
+ingress:
+  host: "hello.localhost.cosmonic.sh"

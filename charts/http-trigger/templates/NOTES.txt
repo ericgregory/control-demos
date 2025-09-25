@@ -1,0 +1,3 @@
+The {{ .Release.Name }} trigger has been deployed successfully.
+
+The HTTP Server is serving on http://{{ .Values.ingress.host }}.

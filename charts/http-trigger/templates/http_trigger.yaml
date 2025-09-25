@@ -1,0 +1,23 @@
+apiVersion: control.cosmonic.io/v1alpha1
+kind: HTTPTrigger
+metadata:
+  name: {{ .Release.Name }}
+  namespace: {{ .Release.Namespace }}
+  labels: {{- include "http-trigger.labels" . | nindent 4 }}
+spec:
+  replicas: {{ .Values.replicas }}
+  {{- with .Values.hostSelector }}
+  hostSelector: {{ . }}
+  {{- end }}
+  {{- with .Values.hostInterfaces }}
+  hostInterfaces: {{ toYaml . | nindent 4 }}
+  {{- end }}
+  {{- with .Values.volumes }}
+  volumes: {{ toYaml . | nindent 4 }}
+  {{- end }}
+  ingress:
+    host: {{ .Values.ingress.host }}
+    paths: {{ toYaml .Values.ingress.paths | nindent 6 }}
+  template:
+    spec:
+      components: {{ tpl (toYaml .Values.components) . | nindent 8 }}

@@ -1,0 +1,23 @@
+# A host-label selector for placement. (ex: {hostgroup: "default"})
+hostSelector: {}
+
+# Additional host interfaces (ex: wasi:logging/logging )
+hostInterfaces: []
+
+# Volumes available to all components to mount
+volumes: []
+
+# This is for setting up a WebAssembly component.
+# More information can be found here: https://cosmonic.com/docs/api-reference/runtime.wasmcloud.dev#component
+# Only one component can export wasi:http/incoming-handler
+components: []
+
+# how many copies of the components above to schedule
+replicas: 1
+
+# multiple workloads can bind to the same "host" under different paths
+ingress:
+  host: ""
+  paths:
+    - path: /
+      pathType: Prefix
