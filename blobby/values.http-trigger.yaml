@@ -1,0 +1,19 @@
+# For the 'http-trigger' helm chart
+components:
+  - name: blobby
+    image: ghcr.io/cosmonic-labs/components/blobby:0.2.0
+
+ingress:
+  host: "blobby.localhost.cosmonic.sh"
+
+hostInterfaces:
+  - namespace: wasi
+    package: blobstore
+    version: 0.2.0-draft
+    interfaces:
+      - blobstore
+  - namespace: wasi
+    package: logging
+    version: 0.1.0-draft
+    interfaces:
+      - logging
