@@ -57,22 +57,16 @@ config:
       domain: default
 ```
 
-Deploy this demo to a Kubernetes cluster with Cosmonic Control and NATS using the included Helm chart:
+Deploy this demo to a Kubernetes cluster with Cosmonic Control and NATS using the shared HTTP trigger chart:
 
 ```shell
-helm install blobstore-nats ./chart/blobstore-nats
+helm install blobstore-nats ../../charts/http-trigger -f values.yaml
 ```
 
 The chart is also available as an OCI artifact:
 
 ```shell
-helm install blobstore-nats oci://ghcr.io/cosmonic-labs/charts/blobstore-nats --version 0.1.0
-```
-
-You can also deploy with the included CRD manifests:
-
-```shell
-kubectl apply -f ./manifests/
+helm install http-server oci://ghcr.io/cosmonic-labs/charts/http-trigger:0.1.2 -f values.yaml
 ```
 
 ## Contents
@@ -80,8 +74,6 @@ kubectl apply -f ./manifests/
 In addition to the standard elements of a Rust project, the template directory includes the following files and directories:
 
 - `wit/`: Directory for WebAssembly Interface Type (WIT) packages that define interfaces
-- `manifests/`: Example CRD deployment manifests for Kubernetes clusters with Cosmonic Control
-- `chart/`: Helm chart
 
 ## Build Dependencies
 

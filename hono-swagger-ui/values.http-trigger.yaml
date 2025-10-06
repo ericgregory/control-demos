@@ -1,0 +1,7 @@
+# For the 'http-trigger' helm chart
+components:
+  - name: hono-swagger-ui
+    image: ghcr.io/cosmonic-labs/control-demos/hono-swagger-ui:0.1.2
+
+ingress:
+  host: "hono-swagger-ui.localhost.cosmonic.sh"

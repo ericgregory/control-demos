@@ -22,10 +22,16 @@ helm install hostgroup oci://ghcr.io/cosmonic/cosmonic-control-hostgroup --versi
 
 ## Deploy with Cosmonic Control
 
-Deploy this template to a Kubernetes cluster with Cosmonic Control using the included CRD manifest:
+Deploy this component to a Kubernetes cluster with Cosmonic Control using the shared HTTP trigger chart:
 
 ```shell
-kubectl apply -f ./manifests/component.yaml
+helm install hello-world ../../charts/http-trigger -f values.yaml
+```
+
+The chart is also available as an OCI artifact:
+
+```shell
+helm install http-server oci://ghcr.io/cosmonic-labs/charts/http-trigger:0.1.2 -f values.yaml
 ```
 
 ## Contents
@@ -33,9 +39,8 @@ kubectl apply -f ./manifests/component.yaml
 In addition to the standard elements of a Rust project, the template directory includes the following files and directories:
 
 - `wit/`: Directory for WebAssembly Interface Type (WIT) packages that define interfaces
-- `manifests/`: Example CRD deployment manifests for Kubernetes clusters with Cosmonic Control
 
-There is also a GitHub Workflow `hello-world.yml` in the `.github/workflows` directory at the root of `control-demos` that is triggered on release. This workflow uses the [`setup-wash` GitHub Action](https://github.com/wasmCloud/setup-wash-action) to build the component and push an OCI artifact to GHCR, then updates the manifest in the `manifests/` subdirectory to reflect the latest version. The workflow should work in your own fork and can be adapted for other Rust-based Wasm components with minimal changes. 
+There is also a GitHub Workflow `hello-world.yml` in the `.github/workflows` directory at the root of `control-demos` that is triggered on release. This workflow uses the [`setup-wash` GitHub Action](https://github.com/wasmCloud/setup-wash-action) to build the component and push an OCI artifact to GHCR. The workflow should work in your own fork and can be adapted for other Rust-based Wasm components with minimal changes. 
 
 ## Build Dependencies
 

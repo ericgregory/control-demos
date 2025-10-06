@@ -20,16 +20,16 @@ helm install hostgroup oci://ghcr.io/cosmonic/cosmonic-control-hostgroup --versi
 
 ## Deploy with Cosmonic Control
 
-Deploy this component to a Kubernetes cluster with Cosmonic Control using the shared HTTP sample chart:
+Deploy this component to a Kubernetes cluster with Cosmonic Control using the shared HTTP trigger chart:
 
 ```shell
-helm install http-server ../../charts/http-sample -f values.yaml
+helm install http-server ../../charts/http-trigger -f values.http-trigger.yaml
 ```
 
 The chart is also available as an OCI artifact:
 
 ```shell
-helm install http-server oci://ghcr.io/cosmonic-labs/charts/http-sample -f values.yaml
+helm install http-server oci://ghcr.io/cosmonic-labs/charts/http-trigger:0.1.2 -f values.http-trigger.yaml
 ```
 
 ## Running on Kubernetes

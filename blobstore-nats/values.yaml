@@ -1,0 +1,15 @@
+# For the 'http-trigger' helm chart
+components:
+  - name: blobstore-nats
+    image: ghcr.io/cosmonic-labs/control-demos/http-blobstore:0.1.0
+
+ingress:
+  host: "blobstore-nats.localhost.cosmonic.sh"
+
+hostInterfaces:
+  - namespace: wasi
+    package: blobstore
+    version: 0.2.0-draft
+    interfaces:
+      - blobstore
+      - container

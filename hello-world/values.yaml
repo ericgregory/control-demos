@@ -1,0 +1,7 @@
+# For the 'http-trigger' helm chart
+components:
+  - name: hello-world
+    image: ghcr.io/cosmonic-labs/control-demos/hello-world:0.1.2
+
+ingress:
+  host: "hello-world.localhost.cosmonic.sh"
