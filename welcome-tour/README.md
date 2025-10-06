@@ -27,7 +27,7 @@ helm install welcome-tour ../../charts/http-trigger -f values.http-trigger.yaml 
 The chart is also available as an OCI artifact:
 
 ```shell
-helm install welcome-tour oci://ghcr.io/cosmonic-labs/charts/http-trigger:0.1.2 -f values.http-trigger.yaml -n welcome-app --create-namespace
+helm install welcome-tour --version 0.1.2 oci://ghcr.io/cosmonic-labs/charts/http-trigger -f values.http-trigger.yaml -n welcome-app --create-namespace
 ```
 
 ## Running the Kubernetes demo

@@ -66,7 +66,7 @@ helm install blobstore-nats ../../charts/http-trigger -f values.yaml
 The chart is also available as an OCI artifact:
 
 ```shell
-helm install http-server oci://ghcr.io/cosmonic-labs/charts/http-trigger:0.1.2 -f values.yaml
+helm install blobstore-nats --version 0.1.2 oci://ghcr.io/cosmonic-labs/charts/http-trigger -f values.yaml
 ```
 
 ## Contents

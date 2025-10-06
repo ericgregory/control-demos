@@ -29,7 +29,7 @@ helm install http-server ../../charts/http-trigger -f values.http-trigger.yaml
 The chart is also available as an OCI artifact:
 
 ```shell
-helm install http-server oci://ghcr.io/cosmonic-labs/charts/http-trigger:0.1.2 -f values.http-trigger.yaml
+helm install http-server --version 0.1.2 oci://ghcr.io/cosmonic-labs/charts/http-trigger -f values.http-trigger.yaml
 ```
 
 ## Running on Kubernetes

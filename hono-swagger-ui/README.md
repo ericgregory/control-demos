@@ -24,7 +24,7 @@ helm install hono-swagger-ui ../../charts/http-trigger -f values.http-trigger.ya
 The chart is also available as an OCI artifact:
 
 ```shell
-helm install hono-swagger-ui oci://ghcr.io/cosmonic-labs/charts/http-trigger:0.1.2 -f values.http-trigger.yaml -n hono-swagger-ui --create-namespace
+helm install hono-swagger-ui --version 0.1.2 oci://ghcr.io/cosmonic-labs/charts/http-trigger -f values.http-trigger.yaml -n hono-swagger-ui --create-namespace
 ```
 
 ## Running the Kubernetes demo
