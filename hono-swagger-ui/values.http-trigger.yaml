@@ -5,3 +5,15 @@ components:
 
 ingress:
   host: "hono-swagger-ui.localhost.cosmonic.sh"
+
+hostInterfaces:
+  - namespace: wasi
+    package: config
+    version: 0.2.0-draft
+    interfaces:
+      - runtime
+  - namespace: wasi
+    package: logging
+    version: 0.1.0-draft
+    interfaces:
+      - logging
