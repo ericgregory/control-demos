@@ -57,22 +57,16 @@ config:
       domain: default
 ```
 
-Deploy this demo to a Kubernetes cluster with Cosmonic Control and NATS using the included Helm chart:
+Deploy this demo to a Kubernetes cluster with Cosmonic Control and NATS using the shared HTTP trigger chart:
 
 ```shell
-helm install blobstore-nats ./chart/blobstore-nats
+helm install blobstore-nats ../../charts/http-trigger -f values.yaml
 ```
 
 The chart is also available as an OCI artifact:
 
 ```shell
-helm install blobstore-nats oci://ghcr.io/cosmonic-labs/charts/blobstore-nats --version 0.1.0
-```
-
-You can also deploy with the included CRD manifests:
-
-```shell
-kubectl apply -f ./manifests/
+helm install blobstore-nats --version 0.1.2 oci://ghcr.io/cosmonic-labs/charts/http-trigger -f values.yaml
 ```
 
 ## Contents
@@ -80,8 +74,6 @@ kubectl apply -f ./manifests/
 In addition to the standard elements of a Rust project, the template directory includes the following files and directories:
 
 - `wit/`: Directory for WebAssembly Interface Type (WIT) packages that define interfaces
-- `manifests/`: Example CRD deployment manifests for Kubernetes clusters with Cosmonic Control
-- `chart/`: Helm chart
 
 ## Build Dependencies
 
@@ -91,7 +83,17 @@ Before starting, ensure that you have the following installed:
 - `wasm32-wasip2` target for Rust: Install with `rustup target add wasm32-wasip2`
 - [Wasm Shell (`wash`)](https://github.com/wasmCloud/wash) for component development
 
-### Developing with `wash`
+### Install the blobstore-filesystem plugin
+
+The `blobstore-filesystem` plugin for `wash` enables you to run a component that uses the wasi:blobstore interface against a local filesystem when running `wash dev`.
+
+Install the plugin:
+
+```shell
+wash plugin install ghcr.io/wasmcloud/wash-plugins/blobstore-filesystem:0.1.0
+```
+
+## Developing with `wash`
 
 Clone the [cosmonic-labs/control-demos repository](https://github.com/cosmonic-labs/control-demos): 
 

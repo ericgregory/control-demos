@@ -18,16 +18,16 @@ helm install hostgroup oci://ghcr.io/cosmonic/cosmonic-control-hostgroup --versi
 
 ## Deploy with Cosmonic Control
 
-Deploy this component to a Kubernetes cluster with Cosmonic Control using the shared HTTP sample chart:
+Deploy this component to a Kubernetes cluster with Cosmonic Control using the shared HTTP trigger chart:
 
 ```shell
-helm install welcome-tour ../../charts/http-sample -f values.yaml -n welcome-app --create-namespace
+helm install welcome-tour ../../charts/http-trigger -f values.http-trigger.yaml -n welcome-app --create-namespace
 ```
 
 The chart is also available as an OCI artifact:
 
 ```shell
-helm install welcome-tour oci://ghcr.io/cosmonic-labs/charts/http-sample -f values.yaml -n welcome-app --create-namespace
+helm install welcome-tour --version 0.1.2 oci://ghcr.io/cosmonic-labs/charts/http-trigger -f values.http-trigger.yaml -n welcome-app --create-namespace
 ```
 
 ## Running the Kubernetes demo
@@ -36,7 +36,8 @@ In separate terminal tabs:
 
 ```bash
 kubectl -n cosmonic-system port-forward svc/console 8080:8080
-
+```
+```bash
 kubectl -n cosmonic-system port-forward svc/hostgroup-default 9091:9091
 ```
 
@@ -46,7 +47,11 @@ See some of the resources running with:
 
 ```bash
 kubectl get hosts
+```
+```bash
 kubectl get components -A
+```
+```bash
 kubectl get providers -A
 ```
 
@@ -54,10 +59,17 @@ kubectl get providers -A
 
 ```bash
 helm uninstall welcome-tour -n welcome-app
+```
+```bash
 kubectl delete ns welcome-app
-
+```
+```bash
 helm uninstall hostgroup -n cosmonic-system
+```
+```bash
 helm uninstall cosmonic-control -n cosmonic-system
+```
+```bash
 kubectl delete ns cosmonic-system
 ```
 

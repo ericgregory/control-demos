@@ -1,17 +1,17 @@
 # For the 'http-trigger' helm chart
 components:
-  - name: blobby
-    image: ghcr.io/wasmcloud/components/blobby-rust:0.5.1
+  - name: hono-swagger-ui
+    image: ghcr.io/cosmonic-labs/control-demos/hono-swagger-ui:0.1.2
 
 ingress:
-  host: "blobby.localhost.cosmonic.sh"
+  host: "hono-swagger-ui.localhost.cosmonic.sh"
 
 hostInterfaces:
   - namespace: wasi
-    package: blobstore
+    package: config
     version: 0.2.0-draft
     interfaces:
-      - blobstore
+      - runtime
   - namespace: wasi
     package: logging
     version: 0.1.0-draft

@@ -15,16 +15,16 @@ helm install hostgroup oci://ghcr.io/cosmonic/cosmonic-control-hostgroup --versi
 
 ## Deploy with Cosmonic Control
 
-Deploy this component to a Kubernetes cluster with Cosmonic Control using the shared HTTP sample chart:
+Deploy this component to a Kubernetes cluster with Cosmonic Control using the shared HTTP trigger chart:
 
 ```shell
-helm install hono-swagger-ui ../../charts/http-sample -f values.yaml -n hono-swagger-ui --create-namespace
+helm install hono-swagger-ui ../../charts/http-trigger -f values.http-trigger.yaml -n hono-swagger-ui --create-namespace
 ```
 
 The chart is also available as an OCI artifact:
 
 ```shell
-helm install hono-swagger-ui oci://ghcr.io/cosmonic-labs/charts/http-sample -f values.yaml -n hono-swagger-ui --create-namespace
+helm install hono-swagger-ui --version 0.1.2 oci://ghcr.io/cosmonic-labs/charts/http-trigger -f values.http-trigger.yaml -n hono-swagger-ui --create-namespace
 ```
 
 ## Running the Kubernetes demo
