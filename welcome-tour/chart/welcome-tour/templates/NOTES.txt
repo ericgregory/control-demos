@@ -1,1 +1,0 @@
-The Welcome Tour is serving on {{ .Values.component.configAddress }}
