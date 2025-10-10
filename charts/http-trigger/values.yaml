@@ -21,3 +21,6 @@ ingress:
   paths:
     - path: /
       pathType: Prefix
+
+# Optional value for specifying a path in the NOTES.txt upon installation (ex. "/ui")
+pathNote: ""

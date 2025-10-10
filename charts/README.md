@@ -6,5 +6,4 @@ Sign up for Cosmonic Control's [free trial](https://cosmonic.com/trial) to get a
 
 ## Contents
 
-* `http-sample`: A reusable Helm chart for deploying HTTP components in Cosmonic Control.
 * `http-trigger`: A reusable Helm chart for quickly and easily deploying HTTP components to Cosmonic Control with automatic ingress configuration.

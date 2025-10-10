@@ -2,15 +2,49 @@
 
 This Wasm component is a tool for documenting and testing RESTful APIs, built on the [Hono HTTP framework](https://hono.dev/docs/) and the [Swagger UI](https://swagger.io/docs/open-source-tools/swagger-ui/usage/installation/) middleware. The component provides an interactive documentation interface based on a given OpenAPI specification. 
 
+## Install local Kubernetes environment
+
+For the best local Kubernetes development experience, we recommend installing `kind` with the following `kind-config.yaml` configuration:
+
+```yaml
+kind: Cluster
+apiVersion: kind.x-k8s.io/v1alpha4
+# One control plane node and three "workers."
+nodes:
+- role: control-plane
+  extraPortMappings:
+  - containerPort: 30950
+    hostPort: 80
+    protocol: TCP
+```
+This will help enable simple local ingress with Envoy.
+Start the cluster:
+```shell
+kind create cluster --config=kind-config.yaml
+```
+
 ## Install Cosmonic Control
 
-Sign up for Cosmonic Control's [free trial](https://cosmonic.com/trial) to get a `cosmonicLicenseKey`.
+:::warning[License key required]
+You'll need a **trial license key** to follow these instructions. Sign up for Cosmonic Control's [free trial](/trial) to get a key.
+:::
 
-```bash
-helm install cosmonic-control oci://ghcr.io/cosmonic/cosmonic-control --version 0.2.0 --namespace cosmonic-system --create-namespace --set cosmonicLicenseKey="<insert license here>"
+Deploy Cosmonic Control to Kubernetes with Helm:
+
+```shell
+helm install cosmonic-control oci://ghcr.io/cosmonic/cosmonic-control\
+  --version 0.3.0\
+  --namespace cosmonic-system\
+  --create-namespace\
+  --set envoy.service.type=NodePort\
+  --set envoy.service.httpNodePort=30950\
+  --set cosmonicLicenseKey="<insert license here>"
 ```
-```bash
-helm install hostgroup oci://ghcr.io/cosmonic/cosmonic-control-hostgroup --version 0.2.0 --namespace cosmonic-system --set http.enabled=true
+
+Deploy a HostGroup:
+
+```shell
+helm install hostgroup oci://ghcr.io/cosmonic/cosmonic-control-hostgroup --version 0.3.0 --namespace cosmonic-system
 ```
 
 ## Deploy with Cosmonic Control
@@ -18,44 +52,34 @@ helm install hostgroup oci://ghcr.io/cosmonic/cosmonic-control-hostgroup --versi
 Deploy this component to a Kubernetes cluster with Cosmonic Control using the shared HTTP trigger chart:
 
 ```shell
-helm install hono-swagger-ui ../../charts/http-trigger -f values.http-trigger.yaml -n hono-swagger-ui --create-namespace
+helm install hono-swagger-ui ../../charts/http-trigger -f values.http-trigger.yaml
 ```
 
-The chart is also available as an OCI artifact:
+You can also deploy the chart as an OCI artifact with a remote values file:
 
 ```shell
-helm install hono-swagger-ui --version 0.1.2 oci://ghcr.io/cosmonic-labs/charts/http-trigger -f values.http-trigger.yaml -n hono-swagger-ui --create-namespace
+helm install hono-swagger-ui --version 0.1.2 oci://ghcr.io/cosmonic-labs/charts/http-trigger -f https://raw.githubusercontent.com/cosmonic-labs/control-demos/refs/heads/main/hono-swagger-ui/values.http-trigger.yaml
 ```
 
-## Running the Kubernetes demo
+## Running on Kubernetes
 
-In a separate terminal tab:
-
-```bash
-kubectl -n cosmonic-system port-forward svc/hostgroup-default 9091:9091
-```
-
-Open browser to <http://localhost:9091/ui> to see the example.
+Open browser to <hono-swagger-ui.localhost.cosmonic.sh/ui> to see the example.
 
 ![screenshot](./images/screenshot.png)
 
 ## Cleaning up
 
 ```bash
-helm uninstall hono-swagger-ui -n hono-swagger-ui
+helm uninstall hono-swagger-ui
 ```
-```bash
-kubectl delete ns hono-swagger-ui
-```
-
 ## Contents
 
 In addition to the standard elements of a TypeScript project, the directory includes the following files and directories:
 
-- `values.yaml`: Helm values for the shared HTTP sample chart
+- `values.http-trigger.yaml`: Helm values for the shared HTTP trigger chart
 - `wit/`: Directory for WebAssembly Interface Type (WIT) packages that define interfaces
 
-## Building Locally
+## Building locally
 
 Before starting, ensure that you have the following installed:
 

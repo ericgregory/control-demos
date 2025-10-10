@@ -17,3 +17,5 @@ hostInterfaces:
     version: 0.1.0-draft
     interfaces:
       - logging
+
+pathNote: "/ui"

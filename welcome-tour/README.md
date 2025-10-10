@@ -6,14 +6,49 @@ The component serves a simple web app that embeds assets like fonts and images d
 
 It also uses `wasi:config/runtime` to pass config from the environment to the Hono app for values such as the Console UI address.
 
+## Install local Kubernetes environment
+
+For the best local Kubernetes development experience, we recommend installing `kind` with the following `kind-config.yaml` configuration:
+
+```yaml
+kind: Cluster
+apiVersion: kind.x-k8s.io/v1alpha4
+# One control plane node and three "workers."
+nodes:
+- role: control-plane
+  extraPortMappings:
+  - containerPort: 30950
+    hostPort: 80
+    protocol: TCP
+```
+This will help enable simple local ingress with Envoy.
+Start the cluster:
+```shell
+kind create cluster --config=kind-config.yaml
+```
+
 ## Install Cosmonic Control
 
-Sign-up for Cosmonic Control's [free trial](https://cosmonic.com/trial) to get a `cosmonicLicenseKey`.
+:::warning[License key required]
+You'll need a **trial license key** to follow these instructions. Sign up for Cosmonic Control's [free trial](/trial) to get a key.
+:::
 
-```bash
-helm install cosmonic-control oci://ghcr.io/cosmonic/cosmonic-control --version 0.2.0 --namespace cosmonic-system --create-namespace --set cosmonicLicenseKey="<insert license here>"
+Deploy Cosmonic Control to Kubernetes with Helm:
 
-helm install hostgroup oci://ghcr.io/cosmonic/cosmonic-control-hostgroup --version 0.2.0 --namespace cosmonic-system --set http.enabled=true
+```shell
+helm install cosmonic-control oci://ghcr.io/cosmonic/cosmonic-control\
+  --version 0.3.0\
+  --namespace cosmonic-system\
+  --create-namespace\
+  --set envoy.service.type=NodePort\
+  --set envoy.service.httpNodePort=30950\
+  --set cosmonicLicenseKey="<insert license here>"
+```
+
+Deploy a HostGroup:
+
+```shell
+helm install hostgroup oci://ghcr.io/cosmonic/cosmonic-control-hostgroup --version 0.3.0 --namespace cosmonic-system
 ```
 
 ## Deploy with Cosmonic Control
@@ -21,47 +56,23 @@ helm install hostgroup oci://ghcr.io/cosmonic/cosmonic-control-hostgroup --versi
 Deploy this component to a Kubernetes cluster with Cosmonic Control using the shared HTTP trigger chart:
 
 ```shell
-helm install welcome-tour ../../charts/http-trigger -f values.http-trigger.yaml -n welcome-app --create-namespace
+helm install welcome-tour ../../charts/http-trigger -f values.http-trigger.yaml
 ```
 
-The chart is also available as an OCI artifact:
+You can also deploy the chart as an OCI artifact with a remote values file:
 
 ```shell
-helm install welcome-tour --version 0.1.2 oci://ghcr.io/cosmonic-labs/charts/http-trigger -f values.http-trigger.yaml -n welcome-app --create-namespace
+helm install welcome-tour --version 0.1.2 oci://ghcr.io/cosmonic-labs/charts/http-trigger -f https://raw.githubusercontent.com/cosmonic-labs/control-demos/refs/heads/main/welcome-tour/values.http-trigger.yaml
 ```
 
 ## Running the Kubernetes demo
 
-In separate terminal tabs:
-
-```bash
-kubectl -n cosmonic-system port-forward svc/console 8080:8080
-```
-```bash
-kubectl -n cosmonic-system port-forward svc/hostgroup-default 9091:9091
-```
-
-Open browser to <http://localhost:9091> to see the tour!
-
-See some of the resources running with:
-
-```bash
-kubectl get hosts
-```
-```bash
-kubectl get components -A
-```
-```bash
-kubectl get providers -A
-```
+Open browser to <http://welcome-tour.localhost.cosmonic.sh> to see the tour.
 
 ## Cleaning up
 
 ```bash
-helm uninstall welcome-tour -n welcome-app
-```
-```bash
-kubectl delete ns welcome-app
+helm uninstall welcome-tour
 ```
 ```bash
 helm uninstall hostgroup -n cosmonic-system
@@ -78,7 +89,6 @@ kubectl delete ns cosmonic-system
 In addition to the standard elements of a TypeScript project, the directory includes the following files and directories:
 
 - `values.yaml`: Helm values for the shared HTTP sample chart
-- `manifests/`: Example CRD deployment manifests for Kubernetes clusters with Cosmonic Control
 - `wit/`: Directory for WebAssembly Interface Type (WIT) packages that define interfaces
 
 ## Building Locally
