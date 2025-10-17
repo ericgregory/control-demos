@@ -2,9 +2,9 @@
 
 This Wasm component is a tool for documenting and testing RESTful APIs, built on the [Hono HTTP framework](https://hono.dev/docs/) and the [Swagger UI](https://swagger.io/docs/open-source-tools/swagger-ui/usage/installation/) middleware. The component provides an interactive documentation interface based on a given OpenAPI specification. 
 
-## Install local Kubernetes environment
+### Install local Kubernetes environment
 
-For the best local Kubernetes development experience, we recommend installing `kind` with the following `kind-config.yaml` configuration:
+For the best local Kubernetes development experience, we recommend installing [`kind`](https://kind.sigs.k8s.io/) and starting a cluster with the following `kind-config.yaml` configuration, enabling simple local ingress with Envoy:
 
 ```yaml
 kind: Cluster
@@ -18,18 +18,16 @@ nodes:
     protocol: TCP
 ```
 
-This will help enable simple local ingress with Envoy.
-
-Start the cluster:
+The following command downloads the `kind-config.yaml` from this repository, starts a cluster, and deletes the config upon completion:
 
 ```shell
-kind create cluster --config=kind-config.yaml
+curl -fLO https://raw.githubusercontent.com/cosmonic-labs/control-demos/refs/heads/main/kind-config.yaml && kind create cluster --config=kind-config.yaml && rm kind-config.yaml
 ```
 
 ## Install Cosmonic Control
 
 :::warning[License key required]
-You'll need a **trial license key** to follow these instructions. Sign up for Cosmonic Control's [free trial](/trial) to get a key.
+You'll need a **trial license key** to follow these instructions. Sign up for Cosmonic Control's [free trial](https://cosmonic.com/trial) to get a key.
 :::
 
 Deploy Cosmonic Control to Kubernetes with Helm:
