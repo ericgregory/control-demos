@@ -32,9 +32,7 @@ curl -fLO https://raw.githubusercontent.com/cosmonic-labs/control-demos/refs/hea
 
 ### Install Cosmonic Control
 
-:::warning[License key required]
 You'll need a **trial license key** to follow these instructions. Sign up for Cosmonic Control's [free trial](https://cosmonic.com/trial) to get a key.
-:::
 
 Deploy Cosmonic Control to Kubernetes with Helm:
 
