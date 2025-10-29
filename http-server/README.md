@@ -28,9 +28,7 @@ curl -fLO https://raw.githubusercontent.com/cosmonic-labs/control-demos/refs/hea
 
 ## Install Cosmonic Control
 
-:::warning[License key required]
 You'll need a **trial license key** to follow these instructions. Sign up for Cosmonic Control's [free trial](https://cosmonic.com/trial) to get a key.
-:::
 
 Deploy Cosmonic Control to Kubernetes with Helm:
 
@@ -81,7 +79,7 @@ You can send a request to the following endpoints:
 Returns a list of available endpoints and their descriptions.
 
 ```shell
-curl http://localhost:9091/
+curl http://http-server.localhost.cosmonic.sh/
 ```
 ```text
   /error - return a 500 error
@@ -95,31 +93,34 @@ curl http://localhost:9091/
 Returns a 500 Internal Server Error.
 
 ```shell
-curl -v http://localhost:9091/error
+curl -v http://http-server.localhost.cosmonic.sh/error
 ```
 ```text
-* Host localhost:9091 was resolved.
-* IPv6: ::1
+* Host http-server.localhost.cosmonic.sh:80 was resolved.
+* IPv6: (none)
 * IPv4: 127.0.0.1
-*   Trying [::1]:9091...
-* Connected to localhost (::1) port 9091
-> GET /error HTTP/1.1
-> Host: localhost:9091
+*   Trying 127.0.0.1:80...
+* Connected to http-server.localhost.cosmonic.sh (127.0.0.1) port 80
+> GET / HTTP/1.1
+> Host: http-server.localhost.cosmonic.sh
 > User-Agent: curl/8.7.1
 > Accept: */*
->
+> 
 * Request completely sent off
-< HTTP/1.1 500 Internal Server Error
-< content-type: text/plain; charset=utf-8
-< x-content-type-options: nosniff
-< vary: origin, access-control-request-method, access-control-request-headers
-< access-control-allow-origin: *
-< access-control-expose-headers: *
+< HTTP/1.1 200 OK
+< content-type: text/plain
+< x-requested-path: /
+< x-existing-paths: /error,/form,/headers,/post
+< date: Thu, 23 Oct 2025 12:08:03 GMT
+< x-envoy-upstream-service-time: 1
+< server: envoy
 < transfer-encoding: chunked
-< date: Thu, 17 Jul 2025 14:10:53 GMT
-<
-Something went wrong
-* Connection #0 to host localhost left intact
+< 
+/error - return a 500 error
+  /form - echo the fields of a POST request
+  /headers - echo your user agent back as a server side header
+* Connection #0 to host http-server.localhost.cosmonic.sh left intact
+  /post - echo the body of a POST request% 
 ```
 
 **GET /headers**
@@ -127,29 +128,28 @@ Something went wrong
 Returns your User-Agent in the response headers.
 
 ```shell
-curl -v http://localhost:9091/headers
+curl -v http://http-server.localhost.cosmonic.sh/headers
 ```
 ```text
-* Host localhost:9091 was resolved.
-* IPv6: ::1
+* Host http-server.localhost.cosmonic.sh:80 was resolved.
+* IPv6: (none)
 * IPv4: 127.0.0.1
-*   Trying [::1]:9091...
-* Connected to localhost (::1) port 9091
+*   Trying 127.0.0.1:80...
+* Connected to http-server.localhost.cosmonic.sh (127.0.0.1) port 80
 > GET /headers HTTP/1.1
-> Host: localhost:9091
+> Host: http-server.localhost.cosmonic.sh
 > User-Agent: curl/8.7.1
 > Accept: */*
->
+> 
 * Request completely sent off
 < HTTP/1.1 200 OK
 < x-your-user-agent: curl/8.7.1
-< vary: origin, access-control-request-method, access-control-request-headers
-< access-control-allow-origin: *
-< access-control-expose-headers: *
+< date: Thu, 23 Oct 2025 12:10:17 GMT
+< x-envoy-upstream-service-time: 2
+< server: envoy
 < transfer-encoding: chunked
-< date: Thu, 17 Jul 2025 14:09:59 GMT
-<
-* Connection #0 to host localhost left intact
+< 
+* Connection #0 to host http-server.localhost.cosmonic.sh left intact
 Check headers!
 ```
 
@@ -158,7 +158,7 @@ Check headers!
 Echoes back form data from a POST request.
 
 ```shell
-curl -X POST -d "field1=value1&field2=value2" http://localhost:9091/form
+curl -X POST -d "field1=value1&field2=value2" http://http-server.localhost.cosmonic.sh/form
 ```
 ```text
 field2: value2
@@ -170,7 +170,7 @@ field1: value1
 Echoes back the entire body of a POST request.
 
 ```shell
-curl -X POST -d "Hello World" http://localhost:9091/post
+curl -X POST -d "Hello World" http://http-server.localhost.cosmonic.sh/post
 ```
 ```text
 Hello World
