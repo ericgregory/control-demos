@@ -12,6 +12,9 @@ app.use(wasiLog());
 
 // Define routes
 app.get('/', (c: Context) => {
+  // Get environment variables for Console UI URL
+  const consoleHost = c.env['consolehost'];
+  const consolePort = c.env['consoleport'];
   // Return site
   return c.html(
     html`<html>
@@ -55,7 +58,7 @@ app.get('/', (c: Context) => {
             background-color:rgb(57, 49, 109);
           }
           .layout {
-            margin-top: 5%;
+            margin-top: 2.5%;
             margin-left: 20%;
             margin-right: 20%;
           }
@@ -82,14 +85,17 @@ app.get('/', (c: Context) => {
       <body class="layout">
         <h1 class="header">Welcome to Cosmonic Control.</h1>
         <div class="body">
-          <p>When you launched this tutorial, you deployed your first WebAssembly component to the cluster. Well done! 🚀</p>
+          <p>When you launched this tutorial, you deployed a WebAssembly component to the cluster. Well done! 🚀</p>
           <p>Now let's get started using Cosmonic Control.</p>
           <h2>1. Launch the Console UI</h2>
           <p>The Console UI is a web-based user interface that enables you to view and manage wasmCloud applications and infrastructure. To port-forward the Console:</p> 
-          <p class="code">kubectl -n cosmonic-system port-forward svc/console 8080:8080</p>
-          <p>See the <a href="https://cosmonic.com/docs/console" target="_blank">Console documentation</a> for a complete walkthrough.</p>
+          <p class="code">kubectl -n cosmonic-system port-forward svc/console ${consolePort}:${consolePort}</p>
+          <p>After port-forwarding, you can find the Console at <b><a href="${consoleHost}:${consolePort}" target="_blank">${consoleHost}:${consolePort}</a></b>.</p> 
+          <p>Click the button below to open the Console in a new browser tab:</p>
+          <a class="button" style="vertical-align:middle" href="${consoleHost}:${consolePort}" target="_blank"><span>Launch Console</span></a>
+          <p>See the <a href="https://cosmonic.com/docs/console" target="_blank">Console documentation</a> for details on authentication and a complete walkthrough.</p>
           <h2>2. Access Perses</h2>
-          <p>You can find the bundled Perses Dashboard at <a href="http://localhost:8080/_perses/" target="_blank">localhost:8080/_perses</a>. See the <a href="https://cosmonic.com/docs/observability" target="_blank">Observability section of the Cosmonic Control documentation</a> for more information.</p>
+          <p>You can find the bundled Perses Dashboard at <a href="${consoleHost}:${consolePort}/_perses/" target="_blank">${consoleHost}:${consolePort}/_perses</a>. See the <a href="https://cosmonic.com/docs/observability" target="_blank">Observability section of the Cosmonic Control documentation</a> for more information.</p>
           <h2>3. Explore Templates</h2>
           <p>Deploy an example from our <a href="https://cosmonic.com/docs/template-catalog/" target="_blank">Template Catalog</a>, or browse wasmCloud applications in Go, Rust, and TypeScript in <a href="https://wasmcloud.com/docs/examples/" target="_blank">the wasmCloud documentation</a>.</p>
         </div>
