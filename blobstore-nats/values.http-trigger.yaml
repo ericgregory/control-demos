@@ -14,6 +14,6 @@ hostInterfaces:
       - blobstore
   - namespace: wasi
     package: config
-    version: 0.2.0-draft
+    version: 0.2.0-rc.1
     interfaces:
-      - runtime
+      - store
